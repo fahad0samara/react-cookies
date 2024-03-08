@@ -3,6 +3,7 @@ import axios from "axios";
 import API_URL from "./apiConfig";
 import { FaImage } from "react-icons/fa"; // Import image icon
 import Switch from 'react-switch';
+import { useNavigate } from "react-router-dom";
 
 const CreateProductForm = () => {
   const [formData, setFormData] = useState<{
@@ -24,7 +25,8 @@ const CreateProductForm = () => {
     image: "",
     flavor: "",
   });
-
+  const [productAdded, setProductAdded] = useState(false);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false); // Loading state
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
   //saucss meassge
@@ -83,8 +85,9 @@ const CreateProductForm = () => {
         image: "",
         flavor: "",
       });
-      // Provide success message to the user
-      alert("Product created successfully!");
+  
+   
+      navigate("/ProductAddedConfirmation");
     } catch (error) {
       if (error.response) {
         // Server responded with a status code outside of 2xx range
