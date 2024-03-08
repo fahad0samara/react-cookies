@@ -7,7 +7,7 @@ import List from "../List";
 const RouterApp: React.FC = () => {
     return (
         <Routes>
-            <Route path="/CreateProductForm" element={<CreateProductForm />} />
+            <Route path="/" element={<CreateProductForm />} />
             <Route path="/ProductAddedConfirmation" element={<ProductAddedConfirmation />} />
             <Route path="/List" element={<List />} />
 
