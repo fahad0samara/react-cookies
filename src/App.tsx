@@ -4,6 +4,8 @@ import DarkModeToggle from './hooks/DarkModeToggle';
 import { useDarkMode } from './hooks/useDarkMode';
 import  RouterApp  from './router/RouterApp'
 import {ToastContainer} from "react-toastify";
+import { Analytics } from "@vercel/analytics/react";
+
 function App() {
   const isDarkMode = useDarkMode();
   return (
@@ -13,6 +15,7 @@ function App() {
     }`}
   >
     <DarkModeToggle />
+    <Analytics />
 
     <ToastContainer />
       <RouterApp />
