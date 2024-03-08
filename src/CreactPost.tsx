@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import {Helmet} from "react-helmet";
 const CreateProductForm = () => {
   const pageTitle = "Create Product";
+  const pageDescription = "Create a new product with this form.";
+
 
   const [formData, setFormData] = useState<{
     name: string;
@@ -138,6 +140,7 @@ const CreateProductForm = () => {
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
+      <meta name="description" content={pageDescription} />
       <div className="mx-auto">
         <div className="flex justify-center px-6 py-12">
           <div
