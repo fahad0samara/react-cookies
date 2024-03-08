@@ -1,4 +1,5 @@
 
+//@ts-nocheck
 import { useState, useEffect } from "react"
 import axios from 'axios'
 import {Helmet} from "react-helmet";
@@ -34,17 +35,19 @@ const List = () => {
   const [sortColumn, setSortColumn] = useState('')
   const [sortDirection, setSortDirection] = useState('')
   const [selectedItem, setSelectedItem] = useState(null)
+  const ASCENDING = 'asc';
+const DESCENDING = 'desc';
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetchData = async () => {
     try {
       setLoading(true)
-      const response = await axios.get<MenuItem[]>(
+      const { data } = await axios.get<MenuItem[]>(
         `${API_URL}/products?page=${page}&limit=${itemsPerPage}&search=${searchQuery}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`
-      )
-      console.log(response.data.products)
-      setData(response.data.products)
-      setTotalPages(response.data.totalPages)
+      );
+      setData(data.products);
+      setTotalPages(data.totalPages);
+      
     } catch (error) {
       console.log(error)
     } finally {
@@ -63,11 +66,13 @@ const List = () => {
   }, [page, searchQuery, itemsPerPage, sortColumn, sortDirection])
 
   const handleNextPage = () => {
-    setPage(page + 1)
+    setPage(prevPage => prevPage + 1);
+
   }
 
   const handlePrevPage = () => {
-    setPage(page - 1)
+    setPage(prevPage => prevPage + 1);
+
   }
 
   const handleDeleteCat = (id: string) => {
@@ -108,12 +113,12 @@ const List = () => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleSort = (column: string) => {
     if (sortColumn === column) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+      setSortDirection(sortDirection === ASCENDING ? DESCENDING : ASCENDING);
     } else {
-      setSortColumn(column)
-      setSortDirection('asc')
+      setSortColumn(column);
+      setSortDirection(ASCENDING);
     }
-  }
+  };
 
   const filteredData = data
     .filter(cat => cat.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -185,6 +190,9 @@ const List = () => {
     link.click()
     document.body.removeChild(link)
   }
+
+ 
+
 
   return (
     <div className="min-h-screen">

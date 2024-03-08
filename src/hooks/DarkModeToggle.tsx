@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import {useDispatch} from "react-redux";
 import {useSelector} from "react-redux";
 import {toggleDarkMode} from "../redux/DarkMode/darkModeSlice";

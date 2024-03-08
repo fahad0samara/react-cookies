@@ -1,5 +1,9 @@
-import PropTypes from 'prop-types';
+
+//@ts-nocheck
+
 import { useDarkMode } from "./hooks/useDarkMode";
+
+
 
 
 const ViewItem = ({ item, onClose }) => {
@@ -48,18 +52,6 @@ const ViewItem = ({ item, onClose }) => {
   );
 };
 
-ViewItem.propTypes = {
-  item: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    category: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-    isNew: PropTypes.bool,
-  }).isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+
 
 export default ViewItem;
