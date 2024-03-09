@@ -53,17 +53,17 @@ const NavSide: React.FC<NavSideProps> = ({}) => {
         </Link>
 
         <Link
-          key="Search"
-          to="/Search"
+          key="UserProducts"
+          to="/UserProducts"
           className={`${linkClasses} ${
-            selectedLink === "/about"
+            selectedLink === "/UserProducts"
               ? "bg-slate-600 text-white  animate-pulse"
               : ""
           }`}
-          onClick={() => handleLinkClick("/about")}
+          onClick={() => handleLinkClick("/UserProducts")}
         >
           <div>
-            {selectedLink === "/Search" && <SVGComponent />}
+            {selectedLink === "/UserProducts" && <SVGComponent />}
             <span className="">Search</span>
           </div>
         </Link>

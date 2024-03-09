@@ -1,5 +1,5 @@
-//@ts-nocheck
 
+//@ts-nocheck
 import {useState, useEffect} from "react";
 import {AiOutlineCloudUpload, AiOutlineReload} from "react-icons/ai";
 import {toast} from "react-toastify";
@@ -13,10 +13,10 @@ const UpdateMenuItemForm = ({itemId, initialValues, onClose, onUpdate}) => {
   const isDarkMode = useDarkMode();
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [categories, setCategories] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingCategory, setIsLoadingCategory] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
@@ -25,34 +25,15 @@ const UpdateMenuItemForm = ({itemId, initialValues, onClose, onUpdate}) => {
   useEffect(() => {
     // Update the form fields when initialValues change
     if (initialValues) {
-      const {name, price, category, description} = initialValues;
+      const {name, price,  description} = initialValues;
       setName(name || "");
       setPrice(price || "");
-      setCategory(category ? category._id : "");
+
       setDescription(description || "");
     }
   }, [initialValues]);
 
-  useEffect(() => {
-    // Fetch categories from the API
-    const fetchCategories = async () => {
-      setIsLoadingCategory(true);
 
-      try {
-        const response = await fetch(
-            `${API_URL}/products`,
-        );
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        toast.error("Something went wrong");
-      } finally {
-        setIsLoadingCategory(false);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   const validateForm = () => {
     const errors = {};
@@ -67,9 +48,7 @@ const UpdateMenuItemForm = ({itemId, initialValues, onClose, onUpdate}) => {
       errors.price = "Price must be a number";
     }
 
-    if (!category) {
-      errors.category = "Category is required";
-    }
+
 
     setErrors(errors);
 
@@ -86,7 +65,7 @@ const UpdateMenuItemForm = ({itemId, initialValues, onClose, onUpdate}) => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
-    formData.append("category", category);
+
     formData.append("description", description);
     if (image) {
       formData.append("image", image);
@@ -96,7 +75,7 @@ const UpdateMenuItemForm = ({itemId, initialValues, onClose, onUpdate}) => {
       setIsLoading(true);
 
       const response = await fetch(
-        `${API_URL}/products${itemId}`,
+        `${API_URL}/products/${itemId}`,
         {
           method: "PUT",
           body: formData,
@@ -200,38 +179,7 @@ const UpdateMenuItemForm = ({itemId, initialValues, onClose, onUpdate}) => {
               )}
             </div>
           </div>
-          <div className="my-5">
-            <label htmlFor="category" className="block text-sm font-medium">
-              Category
-            </label>
-            {isLoadingCategory ? (
-              <div className="flex items-center justify-center rounded-md">
-                <AiOutlineReload className="animate-spin h-5 w-5 mr-3" />
-                <span className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500">
-                  Loading categories...
-                </span>
-              </div>
-            ) : (
-              <select
-                id="category"
-                value={category}
-                onChange={e => setCategory(e.target.value)}
-                className={`mt-2 w-full px-4 py-2 text-black border ${
-                  errors.category ? "border-red-500" : "border-gray-300"
-                } rounded-lg shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500`}
-              >
-                <option value="">Select a category</option>
-                {/* {categories.map(data => (
-                  <option key={data._id} value={data._id}>
-                    {data.name}
-                  </option>
-                ))} */}
-              </select>
-            )}
-            {errors?.category && (
-              <p className="text-red-500 text-sm mt-1">{errors?.category}</p>
-            )}
-          </div>
+          
           <div className="mb-4">
             <label htmlFor="description" className="block text-sm font-medium">
               Description

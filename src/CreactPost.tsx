@@ -98,6 +98,7 @@ originalPrice: string;
         flavor: "",
         isNewProduct: false,
       });
+  console.log("Product added successfully", response.data);
   
    
       navigate("/ProductAddedConfirmation");
