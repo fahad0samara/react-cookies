@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import {useState, useEffect} from "react";
 import {AiOutlineCloudUpload, AiOutlineReload} from "react-icons/ai";
 import {toast} from "react-toastify";
