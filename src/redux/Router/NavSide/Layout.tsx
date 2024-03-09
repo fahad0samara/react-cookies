@@ -3,7 +3,7 @@ import NavSide from "./NavSide";
 import { RiCloseLine, RiMenuLine } from "react-icons/ri";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isNavOpen, setIsNavOpen] = useState(true);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -20,7 +20,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         `}
       >
 <button
-  className={`fixed top-5 left-5 bg-blue-500 text-white py-2 px-4 rounded-full focus:outline-none z-50 transition-colors duration-300 ease-in-out ${
+  className={`fixed top-5 left-5 bg-green-400 text-white py-2 px-4 rounded-full focus:outline-none z-50 transition-colors duration-300 ease-in-out ${
     isNavOpen ? "hover:bg-blue-600" : "hover:bg-blue-400"
   }`}
   onClick={toggleNav}

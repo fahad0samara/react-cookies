@@ -192,6 +192,25 @@ const DESCENDING = 'desc';
     document.body.removeChild(link)
   }
 
+
+  //loading
+
+  if(loading){
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-400"></div>
+        <h1
+          className={`text-xl font-semibold ml-4 ${
+            isDarkMode ? "text-white" : "text-black"
+          }`}
+        >
+          Loading...
+        </h1>
+      </div>
+    )
+  }
+
+
  
 
 
@@ -212,7 +231,7 @@ const DESCENDING = 'desc';
                 <input
                   type="text"
                   name="search"
-                  className="h-12 w-full border-b bg-transparent py-4 pl-12 text-sm outline-none focus:border-b-2 placeholder:text-[#caacfb]
+                  className="h-12 w-full border-b bg-transparent py-4 pl-12 text-sm outline-none focus:border-b-2 placeholder:text-green-400
               "
                   placeholder="Search by 
                Name, Category ,Price
@@ -239,7 +258,7 @@ const DESCENDING = 'desc';
                   name="
                   sort
                   "
-                  className="block w-full px-3 py-2 border-2 border-[#caacfb] text-black sm:w-36 whitespace-pre rounded-lg  p-1 pr-2 text-base outline-none focus:shadow sm:text-sm"
+                  className="block w-full px-3 py-2 border-2  border-green-400 text-black sm:w-36 whitespace-pre rounded-lg  p-1 pr-2 text-base outline-none focus:shadow sm:text-sm"
                   value={sortColumn}
                   onChange={e => {
                     setSortColumn(e.target.value);
@@ -254,7 +273,7 @@ const DESCENDING = 'desc';
                 </select>
                 <AiOutlineSortAscending
                   className="
-                text-[#caacfb] hover:text-gray-700 cursor-pointer
+                text-green-400 hover:text-gray-700 cursor-pointer
                 transition-all duration-150
                 text-2xl
                 hidden
@@ -265,7 +284,7 @@ const DESCENDING = 'desc';
               </div>
               <button
                 type="button"
-                className="inline-flex cursor-pointer items-center rounded-lgb  py-2 px-3 text-center text-sm border-2 border-[#caacfb] hover:text-black  font-medium  shadow hover:bg-gray-100 focus:shadow mt-4 sm:mt-0"
+                className="inline-flex cursor-pointer items-center rounded-lgb  py-2 px-3 text-center text-sm border-2 border-green-400 hover:text-black  font-medium  shadow hover:bg-gray-100 focus:shadow mt-4 sm:mt-0"
                 onClick={exportToCSV}
               >
                 <AiOutlineFile className="mr-1 h-4 w-4 hidden sm:block" />
@@ -278,8 +297,8 @@ const DESCENDING = 'desc';
             <table
               className="min-w-full border-2
 
-              border-[#caacfb]
-              divide-y divide-[#caacfb]
+              border-green-400
+              divide-y  divide-green-400
 
               "
               aria-label="Menu Items"
@@ -287,7 +306,7 @@ const DESCENDING = 'desc';
               <thead
                 className="hidden border-2
 
-              border-[#caacfb]
+              border-green-400
 
                lg:table-header-group"
               >
@@ -361,13 +380,8 @@ const DESCENDING = 'desc';
                 </tr>
               </thead>
 
-              {loading ? (
-                <tr>
-                  <td colSpan="5" className="text-center text-xl py-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : filteredData.length === 0 ? (
+         
+              { filteredData.length === 0 ? (
                 <tr>
                   <td colSpan="4" className="text-center py-4">
                     No items found
@@ -376,7 +390,7 @@ const DESCENDING = 'desc';
               ) : (
                 <tbody
                   className="
-               divide-y divide-[#caacfb] divide-opacity-25
+               divide-y divide-green-400 divide-opacity-25
                 "
                 >
                   {filteredData.map((cat, index) => (
@@ -482,14 +496,14 @@ const DESCENDING = 'desc';
             <button
               onClick={handlePrevPage}
               disabled={page === 1}
-              className="mr-2 h-12 w-12 rounded-full bg-[#caacfb] text-black border text-md font-semibold transition duration-150 hover:bg-gray-100"
+              className="mr-2 h-12 w-12 rounded-full bg-green-400 text-black border text-md font-semibold transition duration-150 hover:bg-gray-100"
             >
               Prev
             </button>
             <button
               onClick={handleNextPage}
               disabled={page === totalPages}
-              className="h-12 w-12 rounded-full border bg-[#caacfb] text-black text-md font-semibold transition duration-150 hover:bg-gray-100"
+              className="h-12 w-12 rounded-full border bg-green-400 text-black text-md font-semibold transition duration-150 hover:bg-gray-100"
             >
               Next
             </button>
@@ -502,7 +516,7 @@ const DESCENDING = 'desc';
               </label>
               <select
                 id="itemsPerPage"
-                className="px-2 py-1 border rounded-md bg-[#caacfb] text-black"
+                className="px-2 py-1 border rounded-md bg-green-400 text-black"
                 value={itemsPerPage}
                 onChange={e => {
                   setItemsPerPage(Number(e.target.value));
@@ -524,7 +538,7 @@ const DESCENDING = 'desc';
                 type="number"
                 min={1}
                 max={totalPages}
-                className="px-2 py-1 border rounded-md w-16 bg-[#caacfb] text-black"
+                className="px-2 py-1 border rounded-md w-16 bg-green-400 text-black"
                 value={page}
                 onChange={e => {
                   setPage(Number(e.target.value));

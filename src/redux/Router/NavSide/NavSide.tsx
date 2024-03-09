@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import SVGComponent from "../../../assets/svg/SVGComponent";
 import { useDarkMode } from "../../../hooks/useDarkMode";
 
@@ -13,16 +13,31 @@ const NavSide: React.FC<NavSideProps> = ({}) => {
   };
 
   const linkClasses =
-    "relative flex cursor-pointer space-x-2 rounded-md py-4 px-10 font-semibold hover:bg-slate-600 transition-colors duration-300 ease-in-out";
+    "relative flex cursor-pointer space-x-2 rounded-md py-4 px-10 font-semibold hover:bg-green-400 transition-colors duration-300 ease-in-out";
 
   return (
-<div className={`fixed left-0 top-0 h-full w-64 ${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"}`}>
- 
-  
-      <h1 className="mt-10 ml-10 text-3xl font-bold">
-        
-      </h1>
+    <div
+      className={`fixed left-0 top-0 h-full w-64 ${
+        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"
+      }`}
+    >
+      <h1 className="mt-10 ml-10 text-3xl font-bold"></h1>
       <div className="mt-20 space-y-3">
+      <Link
+          key="Home"
+          to="/"
+          className={`${linkClasses} ${
+            selectedLink === "/" ? "bg-slate-600 text-white  animate-pulse" : ""
+          }`}
+          onClick={() => handleLinkClick("/")}
+        >
+          <div>
+            {selectedLink === "/" && <SVGComponent />}
+            <span className="">
+              creact prodact
+            </span>
+          </div>
+        </Link>
         <Link
           key="List"
           to="/List"
@@ -38,19 +53,7 @@ const NavSide: React.FC<NavSideProps> = ({}) => {
             <span className="">List</span>
           </div>
         </Link>
-        <Link
-          key="Hero"
-          to="/"
-          className={`${linkClasses} ${
-            selectedLink === "/" ? "bg-slate-600 text-white  animate-pulse" : ""
-          }`}
-          onClick={() => handleLinkClick("/")}
-        >
-          <div>
-            {selectedLink === "/" && <SVGComponent />}
-            <span className="">Hero</span>
-          </div>
-        </Link>
+     
 
         <Link
           key="UserProducts"
@@ -64,10 +67,12 @@ const NavSide: React.FC<NavSideProps> = ({}) => {
         >
           <div>
             {selectedLink === "/UserProducts" && <SVGComponent />}
-            <span className="">Search</span>
+            <span className="">
+              User Products
+            </span>
           </div>
         </Link>
-
+{/* 
         <Link
           key="Swiper"
           to="/Swiper"
@@ -97,7 +102,7 @@ const NavSide: React.FC<NavSideProps> = ({}) => {
             {selectedLink === "/Footer" && <SVGComponent />}
             <span className="">Footer</span>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
