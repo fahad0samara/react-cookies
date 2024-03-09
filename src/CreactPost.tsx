@@ -7,8 +7,11 @@ import { FaImage } from "react-icons/fa"; // Import image icon
 import Switch from 'react-switch';
 import { useNavigate } from "react-router-dom";
 import {Helmet} from "react-helmet";
+import { useDarkMode } from "./hooks/useDarkMode";
 const CreateProductForm = () => {
+
   const pageTitle = "Create Product";
+  const isDarkMode = useDarkMode()
   const pageDescription = "Create a new product with this form.";
 
 
@@ -16,11 +19,12 @@ const CreateProductForm = () => {
     name: string;
     description: string;
     price: string;
-
-    originalPrice: string;
+originalPrice: string;
     discountPercentage: string;
     image: File | string;
     flavor: string;
+    isNewProduct: boolean; 
+
   }>({
     name: "",
     description: "",
@@ -30,6 +34,7 @@ const CreateProductForm = () => {
     discountPercentage: "",
     image: "",
     flavor: "",
+    isNewProduct: false,
   });
   const [productAdded, setProductAdded] = useState(false);
   const navigate = useNavigate();
@@ -77,6 +82,7 @@ const CreateProductForm = () => {
     formDataToSend.append("discountPercentage", formData.discountPercentage);
     formDataToSend.append("flavor", formData.flavor);
     formDataToSend.append("image", formData.image);
+    formDataToSend.append("isNewProduct", String(formData.isNewProduct)); 
 
     try {
       const response = await axios.post(`${API_URL}/products`, formDataToSend);
@@ -90,6 +96,7 @@ const CreateProductForm = () => {
         discountPercentage: "",
         image: "",
         flavor: "",
+        isNewProduct: false,
       });
   
    
@@ -136,7 +143,10 @@ const CreateProductForm = () => {
 
   return (
 
-    <div className="h-full bg-gray-400">
+    <div    className={` ${
+      isDarkMode ? "bg-black text-white" : "bg-white text-black"
+    }`}
+  >
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
@@ -147,7 +157,7 @@ const CreateProductForm = () => {
             className={`w-full ${
               formData.image
                 ? "lg:w-3/4 flex"
-                : "xl:w-full lg:w-11/12 xl:w-10/12"
+                : "xl:w-full lg:w-11/12"
             } `}
           >
             <div className="w-full lg:w-2/4 md:w-1/2 bg-cover rounded-l-lg relative md:block hidden">
@@ -171,11 +181,17 @@ const CreateProductForm = () => {
             </div>
             <div className="flex justify-center items-center h-full ">
               <div
-                className={`w-full bg-white p-5 rounded-lg lg:rounded-l-none ${
-                  formData.image ? "ml-auto" : "mx-auto"
-                } ${formData.image ? "order-1 lg:order-2" : ""}`}
+  className={`
+  max-w-5xl
+  p-6
+  rounded-xl
+  lg:rounded-l-none
+  ${formData.image ? "ml-auto" : "mx-auto"}
+  ${formData.image ? "order-1 lg:order-2" : ""}
+  ${isDarkMode ? "bg-gray-800 text-white shadow-xl" : "bg-gray-200 text-black shadow-md"}
+`}
               >
-                <h3 className="py-4 text-2xl text-center text-gray-800">
+                <h3 className="py-4 text-2xl text-center ">
                   Create a New Product
                 </h3>
                 {loading && (
@@ -212,80 +228,114 @@ const CreateProductForm = () => {
                     <div className="w-full sm:w-1/2 px-2 mb-4">
                       <label
                         htmlFor="name"
-                        className="block mb-1 text-gray-800"
+                        className="block mb-1 "
                       >
                         Product Name
                       </label>
                       <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md"
-                        required
-                      />
+  type="text"
+  id="name"
+  name="name"
+  placeholder="Enter product name"
+  value={formData.name}
+  onChange={handleInputChange}
+  className={`
+    w-full
+    px-4
+    py-2
+    border
+    rounded-md
+    ${isDarkMode ? "bg-gray-600 text-white" : "bg-gray-300 text-black"}
+  `}
+  required
+/>
+
                     </div>
                     <div className="w-full sm:w-1/2 px-2 mb-4">
-                      <label
-                        htmlFor="image"
-                        className="block mb-1 text-gray-800"
-                      >
-                        Product Image
-                      </label>
-                      <div className="flex items-center border border-gray-400 rounded-md p-2">
-                        <label
-                          htmlFor="image-upload"
-                          className="cursor-pointer mr-2 text-blue-500"
-                        >
-                          <FaImage />
-                        </label>
-                        <input
-                          type="file"
-                          id="image-upload"
-                          name="image"
-                          onChange={handleImageChange}
-                          className="hidden"
-                          required
-                        />
-                        <span className="text-gray-600">
-                          {formData.image instanceof File
-                            ? formData.image.name
-                            : "Upload Product Image"}
-                        </span>
-                      </div>
-                    </div>
+  <label htmlFor="image" className="block mb-1">
+    Product Image
+  </label>
+  <div className={`
+    flex
+    items-center
+    border
+    border-gray-400
+    rounded-md
+    p-2
+    ${isDarkMode ? "bg-gray-600" : "bg-gray-300"}
+  `}>
+    <label
+      htmlFor="image-upload"
+      className={`cursor-pointer mr-2 ${isDarkMode ? "text-blue-300" : "text-blue-500"}`}
+    >
+      <FaImage  />
+    </label>
+    <input
+      type="file"
+      id="image-upload"
+      name="image"
+      onChange={handleImageChange}
+      className="hidden"
+      required
+    />
+    <span className={`text-gray-600 ${isDarkMode ? "text-white" : "text-black"}`}>
+      {formData.image instanceof File
+        ? formData.image.name
+: "Select an image"
+      }
+        
+    </span>
+  </div>
+</div>
+
+
 
                     <div className="w-full px-2 mb-4">
                       <label
                         htmlFor="description"
-                        className="block mb-1 text-gray-800"
+                        className="block mb-1 "
                       >
                         Product Description
                       </label>
                       <textarea
+                        placeholder="Enter product description"
                         id="description"
                         name="description"
                         value={formData.description}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md"
+                        className={`
+                        w-full
+                        px-4
+                        py-2
+                        border
+                        rounded-md
+                        ${isDarkMode ? "bg-gray-600 text-white" : "bg-gray-300 text-black"}
+                      `}
                         required
                       ></textarea>
                     </div>
                     <div className="w-full sm:w-1/2 px-2 mb-4">
                       <label
                         htmlFor="price"
-                        className="block mb-1 text-gray-800"
+                        className="block mb-1 "
                       >
                         Price
                       </label>
                       <input
+                      placeholder="Enter product price"
                         type="number"
                         id="price"
                         name="price"
                         value={formData.price}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md"
+                        className={`
+                        w-full
+                        px-4
+                        py-2
+                        border
+                        rounded-md
+                        ${isDarkMode ? "bg-gray-600 text-white" : "bg-gray-300 text-black"}
+                      `}
                         min="0"
                         step="0.01"
                         required
@@ -294,22 +344,47 @@ const CreateProductForm = () => {
                     <div className="w-full sm:w-1/2 px-2 mb-4">
                       <label
                         htmlFor="flavor"
-                        className="block mb-1 text-gray-800"
+                        className="block mb-1 "
                       >
                         Flavor
                       </label>
                       <input
+                        placeholder="Enter product flavor"
                         type="text"
                         id="flavor"
                         name="flavor"
                         value={formData.flavor}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md"
+                        className={`
+    w-full
+    px-4
+    py-2
+    border
+    rounded-md
+    ${isDarkMode ? "bg-gray-600 text-white" : "bg-gray-300 text-black"}
+  `}
                         required
                       />
                     </div>
                     <div className="w-full px-2 mb-4 flex items-center">
-  <label className="mr-4 text-gray-800">
+                    <div className="w-full px-2 mb-4 flex items-center">
+  <label htmlFor="isNewProduct" className="mr-4">
+    Is the product new?
+    <span className="ml-2">{formData.isNewProduct ? "Yes" : "No"}</span>
+  </label>
+  <Switch
+    id="isNewProduct" 
+    onChange={() => setFormData({ ...formData, isNewProduct: !formData.isNewProduct })}
+    checked={formData.isNewProduct}
+  />
+</div>
+
+      </div>
+
+                    <div className="w-full px-2 mb-4 flex items-center">
+  <label className="mr-4" 
+  htmlFor="showAdditionalFields"
+  >
     Do you want to add discount to the product?
     <span className="ml-2">{showAdditionalFields ?
       "Yes" : "No"
@@ -324,6 +399,7 @@ const CreateProductForm = () => {
     )}
   </label>
   <Switch
+    id="showAdditionalFields"
     onChange={() => setShowAdditionalFields(!showAdditionalFields)}
     checked={showAdditionalFields}
   />
@@ -333,17 +409,25 @@ const CreateProductForm = () => {
                     <div className="w-full sm:w-1/2 px-2 mb-4">
                       <label
                         htmlFor="originalPrice"
-                        className="block mb-1 text-gray-800"
+                        className="block mb-1 "
                       >
                       discount price 
                       </label>
                       <input
+                        placeholder="Enter product original price"
                         type="number"
                         id="originalPrice"
                         name="originalPrice"
                         value={formData.originalPrice}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md"
+                        className={`
+                        w-full
+                        px-4
+                        py-2
+                        border
+                        rounded-md
+                        ${isDarkMode ? "bg-gray-600 text-white" : "bg-gray-300 text-black"}
+                      `}
                         min="0"
                         step="0.01"
                       />
@@ -353,17 +437,25 @@ const CreateProductForm = () => {
                     <div className="w-full sm:w-1/2 px-2 mb-4">
                       <label
                         htmlFor="discountPercentage"
-                        className="block mb-1 text-gray-800"
+                        className="block mb-1 "
                       >
                         Discount Percentage
                       </label>
                       <input
+                        placeholder="Enter product discount percentage"
                         type="number"
                         id="discountPercentage"
                         name="discountPercentage"
                         value={formData.discountPercentage}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 border rounded-md"
+                        className={`
+                        w-full
+                        px-4
+                        py-2
+                        border
+                        rounded-md
+                        ${isDarkMode ? "bg-gray-600 text-white" : "bg-gray-300 text-black"}
+                      `}
                         min="0"
                         max="100"
                         step="0.01"
@@ -373,22 +465,21 @@ const CreateProductForm = () => {
                   </div>
 
                   <div className="w-full px-2 mb-4 flex justify-center items-center">
-                    {loading ? (
-                      <div className="text-center">
-                        <span className="animate-spin inline-flex rounded-full h-8 w-8 border-b-2 border-gray-900"></span>
-                        <span className="block mt-2 text-gray-600">
-                          Creating product...
-                        </span>
-                      </div>
-                    ) : (
-                      <button
-                        type="submit"
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                      >
-                        Create Product
-                      </button>
-                    )}
-                  </div>{" "}
+  {loading ? (
+    <div className="text-center">
+      <span className="animate-spin inline-flex rounded-full h-8 w-8 border-b-2 border-gray-900"></span>
+      <span className="block mt-2 text-2xl font-bold">Creating product...</span>
+    </div>
+  ) : (
+    <button
+      type="submit"
+      className="bg-green-500 text-white px-4 py-2 rounded-md text-2xl font-bold"
+    >
+      Create Product
+    </button>
+  )}
+</div>
+
                 </form>
               </div>
             </div>

@@ -1,12 +1,13 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import SVGComponent from "../../../assets/svg/SVGComponent";
+import { useDarkMode } from "../../../hooks/useDarkMode";
 
 type NavSideProps = React.HTMLAttributes<HTMLElement>;
 
 const NavSide: React.FC<NavSideProps> = ({}) => {
   const [selectedLink, setSelectedLink] = useState("");
-
+  const isDarkMode = useDarkMode();
   const handleLinkClick = (link: string) => {
     setSelectedLink(link);
   };
@@ -15,8 +16,12 @@ const NavSide: React.FC<NavSideProps> = ({}) => {
     "relative flex cursor-pointer space-x-2 rounded-md py-4 px-10 font-semibold hover:bg-slate-600 transition-colors duration-300 ease-in-out";
 
   return (
-    <div className="fixed left-0 top-0 h-full w-64 bg-gray-700 text-white">
-      <h1 className="mt-10 ml-10 text-3xl font-bold">Dashboard</h1>
+<div className={`fixed left-0 top-0 h-full w-64 ${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-200 text-black"}`}>
+ 
+  
+      <h1 className="mt-10 ml-10 text-3xl font-bold">
+        
+      </h1>
       <div className="mt-20 space-y-3">
         <Link
           key="List"

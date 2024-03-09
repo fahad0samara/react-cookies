@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import NavSide from "./NavSide";
-import {RiCloseLine, RiMenuLine} from "react-icons/ri";
+import { RiCloseLine, RiMenuLine } from "react-icons/ri";
 
-const Layout: React.FC<{children: React.ReactNode}> = ({children}) => {
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isNavOpen, setIsNavOpen] = useState(true);
 
   const toggleNav = () => {
@@ -10,7 +10,7 @@ const Layout: React.FC<{children: React.ReactNode}> = ({children}) => {
   };
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen w-full">
       {isNavOpen && <NavSide />}
       <div
         className={`
@@ -19,18 +19,20 @@ const Layout: React.FC<{children: React.ReactNode}> = ({children}) => {
         ${isNavOpen ? " ml-64" : "ml-0"}
         `}
       >
-        <button
-          className={`fixed top-5 left-5 bg-blue-500 text-white py-2 px-4 rounded-full focus:outline-none z-50 transition-colors duration-300 ease-in-out ${
-            isNavOpen ? "hover:bg-blue-600" : "hover:bg-blue-400"
-          }`}
-          onClick={toggleNav}
-        >
-          {isNavOpen ? (
-            <RiCloseLine className="text-2xl" />
-          ) : (
-            <RiMenuLine className="text-2xl" />
-          )}
-        </button>
+<button
+  className={`fixed top-5 left-5 bg-blue-500 text-white py-2 px-4 rounded-full focus:outline-none z-50 transition-colors duration-300 ease-in-out ${
+    isNavOpen ? "hover:bg-blue-600" : "hover:bg-blue-400"
+  }`}
+  onClick={toggleNav}
+  aria-label={isNavOpen ? "Close navigation menu" : "Open navigation menu"}
+>
+  {isNavOpen ? (
+    <RiCloseLine className="text-2xl" />
+  ) : (
+    <RiMenuLine className="text-2xl" />
+  )}
+</button>
+
         <div
           className={`transition-opacity duration-300
           

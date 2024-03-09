@@ -1,5 +1,5 @@
 
-//@ts-nocheck
+
 import { useState, useEffect } from "react"
 import axios from 'axios'
 import {Helmet} from "react-helmet";
@@ -20,6 +20,7 @@ import { BsSearch } from 'react-icons/bs'
 import { useDarkMode } from "./hooks/useDarkMode";
 import { MenuItem } from '../type'
 import API_URL from "./apiConfig";
+import UpdateItem from "./UpdateItem";
 
 const List = () => {
   const pageTitle = 'List'
@@ -195,7 +196,10 @@ const DESCENDING = 'desc';
 
 
   return (
-    <div className="min-h-screen">
+    <div    className={` ${
+      isDarkMode ? "bg-black text-white" : "bg-white text-black"
+    }`}
+    >
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
@@ -530,8 +534,8 @@ const DESCENDING = 'desc';
           </div>
         </div>
       </div>
-      {/* {editMode && editItemId && (
-        <UpdateMenu
+      {editMode && editItemId && (
+        <UpdateItem
           itemId={editItemId}
           initialValues={
             editItemId && data.find(item => item._id === editItemId)
@@ -539,7 +543,7 @@ const DESCENDING = 'desc';
           onClose={exitEditMode}
           onUpdate={fetchData}
         />
-      )} */}
+      )}
       {selectedItem && (
         <ViewItem
           item={selectedItem}

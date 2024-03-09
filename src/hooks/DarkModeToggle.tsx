@@ -14,19 +14,21 @@ const DarkModeToggle = () => {
   };
 
   return (
-    <button
-      onClick={handleToggle}
-      className={`fixed bottom-4 right-4 z-50 ${
-        isDarkMode ? "bg-black" : "bg-white"
-      } px-3 py-2 rounded-full focus:outline-none focus:shadow-outline 
-        ${isDarkMode ? "text-yellow-500" : "text-gray-500"}`}
-    >
-      {isDarkMode ? (
-        <FaSun className="text-yellow-500 text-xl" />
-      ) : (
-        <FaMoon className="text-gray-500 text-xl" />
-      )}
-    </button>
+<button
+  onClick={handleToggle}
+  className={`fixed bottom-4 right-4 z-50 ${
+    isDarkMode ? "bg-black" : "bg-white"
+  } px-3 py-2 rounded-full focus:outline-none focus:shadow-outline 
+    ${isDarkMode ? "text-yellow-500" : "text-gray-500"}`}
+  aria-label={isDarkMode ? "Toggle light mode" : "Toggle dark mode"}
+>
+  {isDarkMode ? (
+    <FaSun className="text-yellow-500 text-xl" />
+  ) : (
+    <FaMoon className="text-gray-500 text-xl" />
+  )}
+</button>
+
   );
 };
 
