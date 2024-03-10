@@ -25,7 +25,7 @@ const UserProducts: React.FC = () => {
         try {
           setLoading(true);
           const response = await axios.get<{ userIP: string }>(
-            `http://localhost:3000/get-user-ip`
+            `${API_URL}/get-user-ip`
           );
           const userIP = response.data.userIP; // Store userIP if needed later
           await fetchUserProducts(userIP);
